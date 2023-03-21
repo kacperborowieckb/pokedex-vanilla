@@ -9,8 +9,17 @@ h2 {
   text-align: center;
 }
 
+h3 {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+body {
+  background-color: #121212;
+}
+
 .img-container {
-  height: 100px;
+  height: 150px;
   margin: 0 auto;
   aspect-ratio: 1 / 1;
 }
@@ -23,15 +32,21 @@ img {
   width: 100%;
 }
 
+.loading-icon {
+  width: 50px;
+}
+
 .container {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-evenly;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.5rem;
   flex-wrap: wrap;
 }
 
 .card {
-  width: 150px;
+  width: 200px;
   display: grid;
   place-content: center;
   background-color: burlywood;
