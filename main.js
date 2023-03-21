@@ -4,7 +4,7 @@ const pokemons = [];
 const container = document.querySelector('.container');
 
 async function getPokemons() {
-  container.innerHTML = '<img src="loading.png" alt="loading icon" class="loading-icon""/>';
+  container.innerHTML = '<img src="/img/loading.png" alt="loading icon" class="loading-icon""/>';
   for (let i = 1; i <= pokemonNumber; i++) {
     await fetch(url + `${i}`)
       .then((res) => res.json())
@@ -42,58 +42,73 @@ function createPokemonCard(pokemon) {
     `;
 
   card.addEventListener('click', () => {
-    const stats = card.querySelector('.stats');
-    if (card.style.position !== 'fixed') {
-      const fakeCard = document.createElement('div');
-      fakeCard.classList.add('fake-card');
-      fakeCard.style.width = `${card.offsetWidth}px`;
-
-      card.parentNode.insertBefore(fakeCard, card.nextSibling);
-
-      let offsets = card.getBoundingClientRect();
-      card.style.position = 'fixed';
-      card.style['z-index'] = 1;
-      stats.style.height = '60px';
-
-      card.animate(
-        [
-          {
-            top: `${offsets.top}px`,
-            left: `${offsets.left}px`,
-          },
-          {
-            top: '50%',
-            left: '50%',
-            translate: '-50% -50%',
-            transform: `scale(1.5)`,
-          },
-        ],
-        { duration: 500, fill: 'forwards' }
-      );
-    } else {
-      const fakeCard = document.querySelector('.fake-card');
-      const fakeCardOffSet = fakeCard.getBoundingClientRect();
-
-      stats.style.height = '0px';
-
-      card.animate(
-        {
-          top: `${fakeCardOffSet.top}px`,
-          left: `${fakeCardOffSet.left}px`,
-          translate: '0% 0%',
-          transform: `scale(1)`,
-        },
-        { duration: 500, fill: 'forwards' }
-      );
-      setTimeout(() => {
-        card.style.position = 'static';
-        fakeCard.remove();
-        card.style['z-index'] = 0;
-      }, 500);
-    }
+    animateCard(card);
   });
 
   container.appendChild(card);
+}
+
+function animateCard(card) {
+  const testFakeCard = document.querySelector('.fake-card') || null;
+  const stats = card.querySelector('.stats');
+  if (testFakeCard !== null) {
+    animateBackwards(
+      testFakeCard.previousSibling,
+      testFakeCard.previousSibling.querySelector('.stats')
+    );
+  }
+  if (card.style.position !== 'fixed') {
+    const fakeCard = document.createElement('div');
+    fakeCard.classList.add('fake-card');
+    fakeCard.style.width = `${card.offsetWidth}px`;
+    fakeCard.style.minHeight = `${card.offsetHeight}px`;
+
+    card.parentNode.insertBefore(fakeCard, card.nextSibling);
+
+    let offsets = card.getBoundingClientRect();
+    card.style.position = 'fixed';
+    card.style['z-index'] = 1;
+    stats.style.height = '60px';
+
+    card.animate(
+      [
+        {
+          top: `${offsets.top}px`,
+          left: `${offsets.left}px`,
+        },
+        {
+          top: '50%',
+          left: '50%',
+          translate: '-50% -50%',
+          transform: `scale(1.5)`,
+        },
+      ],
+      { duration: 500, fill: 'forwards' }
+    );
+  }
+}
+
+function animateBackwards(card, stats) {
+  const fakeCard = document.querySelector('.fake-card');
+  const fakeCardOffSet = fakeCard.getBoundingClientRect();
+  stats.style.height = '0px';
+
+  card.animate(
+    {
+      top: `${fakeCardOffSet.top}px`,
+      left: `${fakeCardOffSet.left}px`,
+      translate: '0% 0%',
+      transform: `scale(1)`,
+    },
+    { duration: 500, fill: 'forwards' }
+  );
+  setTimeout(() => {
+    card.style.position = 'static';
+    fakeCard.remove();
+  }, 500);
+  setTimeout(() => {
+    card.style['z-index'] = 0;
+  }, 250);
 }
 
 getPokemons();
