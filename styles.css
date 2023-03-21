@@ -16,6 +16,7 @@ h3 {
 
 body {
   background-color: #121212;
+  color: hsl(0, 0%, 90%, 1);
 }
 
 .img-container {
@@ -30,6 +31,7 @@ img {
   object-position: center;
   display: block;
   width: 100%;
+  transition: all 0.4s;
 }
 
 .loading-icon {
@@ -46,10 +48,28 @@ img {
 }
 
 .card {
-  width: 200px;
+  width: 250px;
   display: grid;
   place-content: center;
-  background-color: burlywood;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 1rem;
+  background: rgba(33, 33, 33, 0.55);
+  box-shadow: 0px 0px 5px 2px #444444;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(74, 74, 74, 0.12);
+  transition: all 0.4s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card:hover > .img-container > img {
+  transform: scale(1.15);
+}
+
+.stats {
+  margin: 0px;
+  height: 0;
+  visibility: hidden;
 }

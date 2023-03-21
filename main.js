@@ -19,7 +19,6 @@ async function getPokemons() {
 
 function createPokemonCard(pokemon) {
   const card = document.createElement('div');
-  console.log(pokemon);
   card.classList.add('card');
   card.innerHTML = `
         <div class="img-container">
@@ -31,12 +30,51 @@ function createPokemonCard(pokemon) {
             return `${type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}`;
           })
           .join(' ')}</h3>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+        <ul class="stats">
+        ${[...new Array(3).keys()]
+          .map((item, i) => {
+            return `<li>${
+              pokemon.stats[i].stat.name.toUpperCase() + ': ' + pokemon.stats[i].base_stat
+            }</li>`;
+          })
+          .join('')}
+           
+         </ul>
     `;
+
+  card.addEventListener('click', (e) => {
+    let offsets = card.getBoundingClientRect();
+    card.style.position = card.style.position === '' ? 'fixed' : '';
+    if (card.style.position === 'fixed') {
+      card.style['z-index'] = 1;
+      card.animate(
+        [
+          {
+            top: `${offsets.top}px`,
+            left: `${offsets.left}px`,
+          },
+          {
+            top: '50%',
+            left: '50%',
+            translate: '-50% -50%',
+            transform: `scale(1.5)`,
+          },
+        ],
+
+        { duration: 500, fill: 'forwards' }
+      );
+    } else {
+      card.animate(
+        {
+          translate: '0 0',
+          transform: `scale(1)`,
+        },
+        { duration: 500, fill: 'forwards' }
+      );
+      card.style['z-index'] = 0;
+    }
+  });
+
   container.appendChild(card);
 }
 
