@@ -42,11 +42,19 @@ function createPokemonCard(pokemon) {
          </ul>
     `;
 
-  card.addEventListener('click', (e) => {
-    let offsets = card.getBoundingClientRect();
-    card.style.position = card.style.position === '' ? 'fixed' : '';
-    if (card.style.position === 'fixed') {
+  card.addEventListener('click', () => {
+    if (card.style.position !== 'fixed') {
+      const fakeCard = document.createElement('div');
+      fakeCard.classList.add('fake-card');
+      fakeCard.style.width = `${card.offsetWidth}px`;
+
+      card.parentNode.insertBefore(fakeCard, card.nextSibling);
+
+      let offsets = card.getBoundingClientRect();
+      card.style.position = 'fixed';
       card.style['z-index'] = 1;
+
+      console.log(offsets.top, offsets.left);
       card.animate(
         [
           {
@@ -60,18 +68,25 @@ function createPokemonCard(pokemon) {
             transform: `scale(1.5)`,
           },
         ],
-
         { duration: 500, fill: 'forwards' }
       );
     } else {
+      const fakeCard = document.querySelector('.fake-card');
+      const fakeCardOffSet = fakeCard.getBoundingClientRect();
       card.animate(
         {
-          translate: '0 0',
+          top: `${fakeCardOffSet.top}px`,
+          left: `${fakeCardOffSet.left}px`,
+          translate: '0% 0%',
           transform: `scale(1)`,
         },
         { duration: 500, fill: 'forwards' }
       );
-      card.style['z-index'] = 0;
+      setTimeout(() => {
+        card.style.position = 'static';
+        fakeCard.remove();
+        card.style['z-index'] = 0;
+      }, 500);
     }
   });
 
