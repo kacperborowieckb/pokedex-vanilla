@@ -70,6 +70,7 @@ img {
 
 .stats {
   margin: 0px;
-  height: 0;
-  visibility: hidden;
+  transition: all 0.5s;
+  height: 0px;
+  overflow: hidden;
 }

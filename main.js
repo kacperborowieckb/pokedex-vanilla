@@ -29,8 +29,8 @@ function createPokemonCard(pokemon) {
           .map((type) => {
             return `${type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}`;
           })
-          .join(' ')}</h3>
-        <ul class="stats">
+          .join(' ')}</h3>    
+         <ul class="stats">
         ${[...new Array(3).keys()]
           .map((item, i) => {
             return `<li>${
@@ -38,11 +38,11 @@ function createPokemonCard(pokemon) {
             }</li>`;
           })
           .join('')}
-           
-         </ul>
+         </ul>     
     `;
 
   card.addEventListener('click', () => {
+    const stats = card.querySelector('.stats');
     if (card.style.position !== 'fixed') {
       const fakeCard = document.createElement('div');
       fakeCard.classList.add('fake-card');
@@ -53,8 +53,8 @@ function createPokemonCard(pokemon) {
       let offsets = card.getBoundingClientRect();
       card.style.position = 'fixed';
       card.style['z-index'] = 1;
+      stats.style.height = '60px';
 
-      console.log(offsets.top, offsets.left);
       card.animate(
         [
           {
@@ -73,6 +73,9 @@ function createPokemonCard(pokemon) {
     } else {
       const fakeCard = document.querySelector('.fake-card');
       const fakeCardOffSet = fakeCard.getBoundingClientRect();
+
+      stats.style.height = '0px';
+
       card.animate(
         {
           top: `${fakeCardOffSet.top}px`,
