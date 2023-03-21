@@ -14,6 +14,10 @@ h3 {
   margin-top: 0.5rem;
 }
 
+input {
+  color: inherit;
+}
+
 body {
   background-color: #121212;
   color: hsl(0, 0%, 90%, 1);
@@ -22,10 +26,33 @@ body {
 .header {
   margin-bottom: 2rem;
 }
+
 .logo {
-  max-width: 40%;
+  max-width: 30%;
   min-width: 300px;
   margin: 0 auto;
+}
+
+.search-pokemon {
+  gap: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.search-pokemon-input,
+.submit {
+  background: rgba(33, 33, 33, 0.55);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(74, 74, 74, 0.12);
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 0.75rem;
+}
+
+.search-pokemon-input {
+  width: 250px;
 }
 
 .img-container {
