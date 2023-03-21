@@ -68,6 +68,7 @@ img {
   backdrop-filter: blur(20px);
   border: 1px solid rgba(74, 74, 74, 0.12);
   transition: all 0.5s;
+  position: relative;
 }
 
 .card:hover {
@@ -83,4 +84,11 @@ img {
   transition: all 0.5s;
   height: 0px;
   overflow: hidden;
+}
+
+.id {
+  margin: 0;
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
 }

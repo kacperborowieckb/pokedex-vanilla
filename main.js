@@ -15,12 +15,14 @@ async function getPokemons() {
   pokemons.forEach((pokemon) => {
     createPokemonCard(pokemon);
   });
+  console.log(pokemons);
 }
 
 function createPokemonCard(pokemon) {
   const card = document.createElement('div');
   card.classList.add('card');
   card.innerHTML = `
+        <p class="id">#${pokemon.id.toString().padStart(3, '0')}</p>
         <div class="img-container">
             <img class="img" src="${pokemon.sprites.front_default}" alt="${pokemon.name}"></img>
         </div> 
