@@ -3,6 +3,7 @@ const url = 'https://pokeapi.co/api/v2/pokemon/';
 const pokemons = [];
 const container = document.querySelector('.container');
 const searchInput = document.querySelector('.search-pokemon-input');
+const selectBox = document.querySelector('.select-box');
 
 async function getPokemons() {
   container.innerHTML = '<img src="/img/loading.png" alt="loading icon" class="loading-icon""/>';
@@ -13,6 +14,7 @@ async function getPokemons() {
       .catch((err) => console.log('Error: ' + err));
   }
   displayPokemons(pokemons);
+  addOptions();
 }
 
 function displayPokemons(pokemons) {
@@ -75,7 +77,7 @@ function animateCard(card) {
     card.style.position = 'fixed';
     card.style['z-index'] = 1;
     stats.style.height = '60px';
-
+    let scale = window.innerWidth > 500 ? 1.5 : 1.1;
     card.animate(
       [
         {
@@ -86,7 +88,7 @@ function animateCard(card) {
           top: '50%',
           left: '50%',
           translate: '-50% -50%',
-          transform: `scale(1.5)`,
+          transform: `scale(${scale})`,
         },
       ],
       { duration: 500, fill: 'forwards' }
@@ -117,12 +119,43 @@ function animateBackwards(card, stats) {
   }, 250);
 }
 
-searchInput.addEventListener('keyup', (e) => {
+searchInput.addEventListener('keyup', () => searchPokemon());
+selectBox.addEventListener('change', () => searchPokemon());
+
+function searchPokemon() {
   let value = searchInput.value.trim();
   let arr = pokemons.filter((pokemon) => {
     return pokemon.name.toLowerCase().includes(value.toLowerCase());
   });
+  if (selectBox.value !== 'all')
+    arr = arr.filter((pokemon) => {
+      let types = false;
+      pokemon.types.forEach((type) => {
+        if (type.type.name === selectBox.value) {
+          types = true;
+        }
+      });
+      return types;
+    });
+  console.log(arr);
   displayPokemons(arr);
-});
+}
+
+function addOptions() {
+  let allTypes = [];
+  pokemons.map((pokemon) => {
+    pokemon.types.forEach((type) => {
+      if (allTypes.indexOf(type.type.name) === -1) {
+        allTypes.push(type.type.name);
+      }
+    });
+  });
+  allTypes.forEach((type) => {
+    let option = document.createElement('option');
+    option.setAttribute('value', type);
+    option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+    selectBox.appendChild(option);
+  });
+}
 
 getPokemons();

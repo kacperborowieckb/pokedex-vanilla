@@ -14,7 +14,8 @@ h3 {
   margin-top: 0.5rem;
 }
 
-input {
+input,
+select {
   color: inherit;
 }
 
@@ -23,18 +24,21 @@ body {
   color: hsl(0, 0%, 90%, 1);
 }
 
-.header {
-  margin-bottom: 2rem;
-}
-
 .logo {
   max-width: 30%;
   min-width: 300px;
   margin: 0 auto;
 }
 
-.search-pokemon-input {
-  display: block;
+.inputs {
+  display: grid;
+  gap: 1rem;
+  place-content: center;
+  margin: 2rem 0;
+}
+
+.search-pokemon-input,
+.select-box {
   background: rgba(33, 33, 33, 0.55);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(74, 74, 74, 0.12);
@@ -43,7 +47,10 @@ body {
   border-radius: 20px;
   padding: 0.75rem;
   width: 250px;
-  margin: 2rem auto;
+}
+
+.select-box {
+  border-right: 0.75rem solid transparent;
 }
 
 .img-container {
@@ -70,8 +77,8 @@ img {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
   flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
 .card {

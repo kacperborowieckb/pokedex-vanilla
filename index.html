@@ -10,15 +10,20 @@
   <body>
     <div class="header">
       <img src="/img/logo.png" alt="pokemon logo" class="logo" />
-
-      <input
-        type="text"
-        name="pokemon-search"
-        id="pokemon-search"
-        required
-        class="search-pokemon-input"
-        placeholder="Search for pokemon"
-      />
+      <div class="inputs">
+        <input
+          type="text"
+          name="pokemon-search"
+          id="pokemon-search"
+          required
+          class="search-pokemon-input"
+          placeholder="Search for pokemon"
+          autocomplete="off"
+        />
+        <select class="select-box">
+          <option value="all">All types</option>
+        </select>
+      </div>
     </div>
     <div class="container"></div>
     <script src="main.js"></script>
