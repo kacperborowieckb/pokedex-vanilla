@@ -15,7 +15,8 @@ h3 {
 }
 
 input,
-select {
+select,
+button {
   color: inherit;
 }
 
@@ -116,4 +117,25 @@ img {
   position: absolute;
   top: 1rem;
   left: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+  gap: 1rem;
+}
+
+.btn-previous {
+  opacity: 0.4;
+}
+
+.buttons > * {
+  background: rgba(33, 33, 33, 0.55);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(74, 74, 74, 0.12);
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 0.75rem;
 }

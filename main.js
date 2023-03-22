@@ -4,6 +4,11 @@ const pokemons = [];
 const container = document.querySelector('.container');
 const searchInput = document.querySelector('.search-pokemon-input');
 const selectBox = document.querySelector('.select-box');
+const navButtons = document.querySelector('.buttons');
+const previousBtn = document.querySelector('.btn-previous');
+const nextBtn = document.querySelector('.btn-next');
+let currentFirstIndex = 0;
+let currentLastIndex = pokemonNumber;
 
 async function getPokemons() {
   container.innerHTML = '<img src="/img/loading.png" alt="loading icon" class="loading-icon""/>';
@@ -19,9 +24,14 @@ async function getPokemons() {
 
 function displayPokemons(pokemons) {
   container.innerHTML = '';
-  pokemons.forEach((pokemon) => {
-    createPokemonCard(pokemon);
-  });
+  pokemons
+    .slice(
+      currentFirstIndex,
+      currentFirstIndex > pokemons.length ? pokemons.length : currentFirstIndex + 20
+    )
+    .forEach((pokemon) => {
+      createPokemonCard(pokemon);
+    });
 }
 
 function createPokemonCard(pokemon) {
@@ -71,9 +81,9 @@ function animateCard(card) {
     fakeCard.style.width = `${card.offsetWidth}px`;
     fakeCard.style.minHeight = `${card.offsetHeight}px`;
 
+    let offsets = card.getBoundingClientRect();
     card.parentNode.insertBefore(fakeCard, card.nextSibling);
 
-    let offsets = card.getBoundingClientRect();
     card.style.position = 'fixed';
     card.style['z-index'] = 1;
     stats.style.height = '60px';
@@ -119,15 +129,21 @@ function animateBackwards(card, stats) {
   }, 250);
 }
 
-searchInput.addEventListener('keyup', () => searchPokemon());
-selectBox.addEventListener('change', () => searchPokemon());
+searchInput.addEventListener('keyup', () => {
+  currentFirstIndex = 0;
+  searchPokemon();
+});
+selectBox.addEventListener('change', () => {
+  currentFirstIndex = 0;
+  searchPokemon();
+});
 
 function searchPokemon() {
   let value = searchInput.value.trim();
   let arr = pokemons.filter((pokemon) => {
     return pokemon.name.toLowerCase().includes(value.toLowerCase());
   });
-  if (selectBox.value !== 'all')
+  if (selectBox.value !== 'all') {
     arr = arr.filter((pokemon) => {
       let types = false;
       pokemon.types.forEach((type) => {
@@ -137,7 +153,9 @@ function searchPokemon() {
       });
       return types;
     });
-  console.log(arr);
+  }
+  currentLastIndex = arr.length;
+  prepareButtons();
   displayPokemons(arr);
 }
 
@@ -156,6 +174,33 @@ function addOptions() {
     option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
     selectBox.appendChild(option);
   });
+}
+
+navButtons.addEventListener('click', (e) => {
+  console.log('click');
+  if (e.target === previousBtn) {
+    currentFirstIndex = currentFirstIndex > 0 ? currentFirstIndex - 20 : currentFirstIndex;
+  } else if (e.target === nextBtn) {
+    currentFirstIndex = currentFirstIndex + 20;
+  }
+  searchPokemon();
+});
+
+function prepareButtons() {
+  if (currentFirstIndex === 0) {
+    previousBtn.setAttribute('disabled', 'disabled');
+    previousBtn.style.opacity = '0.4';
+  } else {
+    previousBtn.removeAttribute('disabled');
+    previousBtn.style.opacity = '1';
+  }
+  if (currentFirstIndex + 20 > currentLastIndex) {
+    nextBtn.setAttribute('disabled', 'disabled');
+    nextBtn.style.opacity = '0.4';
+  } else {
+    nextBtn.removeAttribute('disabled');
+    nextBtn.style.opacity = '1';
+  }
 }
 
 getPokemons();
