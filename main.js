@@ -2,6 +2,7 @@ const pokemonNumber = 150;
 const url = 'https://pokeapi.co/api/v2/pokemon/';
 const pokemons = [];
 const container = document.querySelector('.container');
+const searchInput = document.querySelector('.search-pokemon-input');
 
 async function getPokemons() {
   container.innerHTML = '<img src="/img/loading.png" alt="loading icon" class="loading-icon""/>';
@@ -11,11 +12,14 @@ async function getPokemons() {
       .then((pokemon) => pokemons.push(pokemon))
       .catch((err) => console.log('Error: ' + err));
   }
+  displayPokemons(pokemons);
+}
+
+function displayPokemons(pokemons) {
   container.innerHTML = '';
   pokemons.forEach((pokemon) => {
     createPokemonCard(pokemon);
   });
-  console.log(pokemons);
 }
 
 function createPokemonCard(pokemon) {
@@ -112,5 +116,13 @@ function animateBackwards(card, stats) {
     card.style['z-index'] = 0;
   }, 250);
 }
+
+searchInput.addEventListener('keyup', (e) => {
+  let value = searchInput.value.trim();
+  let arr = pokemons.filter((pokemon) => {
+    return pokemon.name.toLowerCase().includes(value.toLowerCase());
+  });
+  displayPokemons(arr);
+});
 
 getPokemons();
