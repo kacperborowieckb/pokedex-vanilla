@@ -27,7 +27,10 @@ export function createPokemonCard(pokemon) {
       `;
 
   card.addEventListener('click', () => {
-    animateCard(card);
+    const testFakeCard = document.querySelectorAll('.fake-card') || null;
+    if (testFakeCard.length < 2) {
+      animateCard(card);
+    }
   });
 
   container.appendChild(card);

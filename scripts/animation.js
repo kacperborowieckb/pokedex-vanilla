@@ -6,7 +6,6 @@ export function animateCard(card) {
       testFakeCard.previousSibling,
       testFakeCard.previousSibling.querySelector('.stats')
     );
-    console.log('koniec backwards');
   }
   if (card.style.position !== 'fixed') {
     const fakeCard = document.createElement('div');
@@ -36,7 +35,6 @@ export function animateCard(card) {
       ],
       { duration: 500, fill: 'forwards' }
     );
-    console.log(po);
   }
 }
 
