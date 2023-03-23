@@ -1,4 +1,6 @@
-export function animateCard(card) {
+import { container } from './variables.js';
+
+function animateCard(card) {
   const testFakeCard = document.querySelector('.fake-card') || null;
   const stats = card.querySelector('.stats');
   if (testFakeCard !== null) {
@@ -42,7 +44,6 @@ function animateBackwards(card, stats) {
   const fakeCard = document.querySelector('.fake-card');
   const fakeCardOffSet = fakeCard.getBoundingClientRect();
   stats.style.height = '0px';
-
   card.animate(
     {
       top: `${fakeCardOffSet.top}px`,
@@ -60,3 +61,10 @@ function animateBackwards(card, stats) {
     card.style['z-index'] = 0;
   }, 250);
 }
+
+container.addEventListener('click', (e) => {
+  const testFakeCard = document.querySelectorAll('.fake-card');
+  if (e.target.closest('.card') && testFakeCard.length < 2) {
+    animateCard(e.target.closest('.card'));
+  }
+});

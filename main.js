@@ -2,6 +2,7 @@ import displayPokemons from './scripts/display.js';
 import './scripts/search.js';
 import { container, pokemons, pokemonNumber, url } from './scripts/variables.js';
 import { addOptions } from './scripts/addOptions.js';
+import './scripts/animation.js';
 
 async function getPokemons() {
   container.innerHTML = '<img src="/img/loading.png" alt="loading icon" class="loading-icon""/>';

@@ -1,5 +1,4 @@
 import { container } from './variables.js';
-import { animateCard } from './animation.js';
 
 export function createPokemonCard(pokemon) {
   const card = document.createElement('div');
@@ -25,13 +24,6 @@ export function createPokemonCard(pokemon) {
             .join('')}
            </ul>     
       `;
-
-  card.addEventListener('click', () => {
-    const testFakeCard = document.querySelectorAll('.fake-card') || null;
-    if (testFakeCard.length < 2) {
-      animateCard(card);
-    }
-  });
 
   container.appendChild(card);
 }
