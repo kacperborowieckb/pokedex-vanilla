@@ -69,7 +69,6 @@ container.addEventListener('click', (e) => {
   const now = new Date().getTime();
   if (now - lastClick >= delay) {
     lastClick = now;
-    const testFakeCard = document.querySelectorAll('.fake-card');
     if (e.target.closest('.card')) {
       animateCard(e.target.closest('.card'));
     }
