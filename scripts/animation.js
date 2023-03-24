@@ -62,9 +62,16 @@ function animateBackwards(card, stats) {
   }, 250);
 }
 
+let lastClick = 0;
+let delay = 501;
+
 container.addEventListener('click', (e) => {
-  const testFakeCard = document.querySelectorAll('.fake-card');
-  if (e.target.closest('.card') && testFakeCard.length < 2) {
-    animateCard(e.target.closest('.card'));
+  const now = new Date().getTime();
+  if (now - lastClick >= delay) {
+    lastClick = now;
+    const testFakeCard = document.querySelectorAll('.fake-card');
+    if (e.target.closest('.card')) {
+      animateCard(e.target.closest('.card'));
+    }
   }
 });
