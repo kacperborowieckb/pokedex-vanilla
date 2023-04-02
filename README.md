@@ -1,5 +1,6 @@
 # pokedex-test
 
+Live: https://celebrated-halva-685e04.netlify.app/
 
 #### What I learned:
 - How to work with api
